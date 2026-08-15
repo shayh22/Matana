@@ -1,8 +1,8 @@
-# Movie Ticket Booking API
+# Matana
 
 This project is a Spring Boot-based RESTful API for managing movie tickets, including users, movies, showtimes, and ticket bookings.
 
-> **Also in this repo:** `index.html` — a standalone Hebrew gift-amount calculator ("כמה לתת במתנה?") served via GitHub Pages. See [README-gift-calculator.md](README-gift-calculator.md). It is unrelated to the API and has no build step.
+> **Also in this repo:** `index.html` — a standalone Hebrew gift-amount calculator ("כמה לתת במתנה?") served via GitHub Pages. See [README-gift-calculator.md](README-gift-calculator.md)
 
 ## Features
 
@@ -11,6 +11,7 @@ This project is a Spring Boot-based RESTful API for managing movie tickets, incl
 - Secure JWT-based authentication
 - Database persistence using JPA and PostgreSQL
 - API documentation using Swagger
+- **JUnit & MockMvc** for testing
 
 ## Tech Stack
 
@@ -32,8 +33,8 @@ This project is a Spring Boot-based RESTful API for managing movie tickets, incl
 ### Clone the Repository
 
 ```sh
-$ git clone https://github.com/shayh22/movie-ticket-booking.git
-$ cd movie-ticket-booking
+$ git clone https://github.com/shayh22/matana.git
+$ cd matana
 ```
 
 ### Configure Database
@@ -95,8 +96,8 @@ $ mvn test
 To deploy the app using Docker:
 
 ```sh
-$ docker build -t movie-ticket-api .
-$ docker run -p 8080:8080 movie-ticket-api
+$ docker build -t matana .
+$ docker run -p 8080:8080 matana
 ```
 
 ## Contributing
@@ -106,6 +107,3 @@ Feel free to fork this repository and submit pull requests for improvements.
 ## License
 
 This project is licensed under the MIT License.
-
-
-
