@@ -3,7 +3,7 @@
 עמוד סטטי אחד (`index.html`) בעברית RTL, שמחשב כמה כסף מקובל לתת במתנה
 בחתונה, בר/בת מצווה, ברית, חינה, אירוסין או יום הולדת.
 
-**דמו:** https://shayh22.github.io/movie-ticket-booking/
+**דמו:** https://shayh22.github.io/matana/
 
 ## מה יש בו
 
