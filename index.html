@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>כמה לתת במתנה? מחשבון מתנות לאירועים</title>
+<meta name="description" content="מחשבון עברי שמחשב כמה כסף מקובל לתת במתנה בחתונה, בר מצווה, ברית ואירועים נוספים — לפי הקשר שלכם, סוג האולם, האזור ומספר האורחים.">
+<meta name="theme-color" content="#6d3bf5">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="כמה לתת במתנה?">
+<meta property="og:locale" content="he_IL">
+<meta property="og:url" content="https://shayh22.github.io/movie-ticket-booking/">
+<meta property="og:title" content="כמה לתת במתנה? 🎁">
+<meta property="og:description" content="חתונה? בר מצווה? ברית? עונים על כמה שאלות ומקבלים סכום מומלץ — לפי הקרבה, האולם, האזור וכמה אנשים מגיעים.">
+<meta property="og:image" content="https://shayh22.github.io/movie-ticket-booking/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="מחשבון מתנות לאירועים בעברית">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="כמה לתת במתנה? 🎁">
+<meta name="twitter:description" content="מחשבון מתנות לאירועים — סכום מומלץ בכמה קליקים.">
+<meta name="twitter:image" content="https://shayh22.github.io/movie-ticket-booking/og-image.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+
+<style>
+  :root{
+    --bg:#f4f1fb;
+    --bg2:#e9e4fb;
+    --card:#ffffff;
+    --card-soft:#faf8ff;
+    --ink:#1d1830;
+    --ink-soft:#5c5578;
+    --ink-faint:#8b83a8;
+    --line:#e5e0f2;
+    --brand:#6d3bf5;
+    --brand-ink:#4a1fd0;
+    --brand-soft:#efe9ff;
+    --accent:#f5a524;
+    --good:#12a150;
+    --shadow:0 10px 30px rgba(50,20,120,.10);
+    --radius:18px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#14111f;
+      --bg2:#1b1730;
+      --card:#1e1a2e;
+      --card-soft:#252038;
+      --ink:#f2effc;
+      --ink-soft:#bdb5d6;
+      --ink-faint:#8d85a8;
+      --line:#332c4d;
+      --brand:#a78bfa;
+      --brand-ink:#c4b2ff;
+      --brand-soft:#2b2447;
+      --accent:#fbbf24;
+      --good:#4ade80;
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Heebo","Assistant","Rubik",system-ui,-apple-system,"Segoe UI","Noto Sans Hebrew",Arial,sans-serif;
+    background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+    background-attachment:fixed;
+    color:var(--ink);
+    line-height:1.55;
+    -webkit-text-size-adjust:100%;
+    padding:0 0 40px;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+  header.top{padding:28px 0 18px;text-align:center}
+  header.top h1{margin:0 0 6px;font-size:clamp(26px,6vw,38px);letter-spacing:-.5px}
+  header.top h1 .emoji{-webkit-text-fill-color:initial}
+  header.top p{margin:0;color:var(--ink-soft);font-size:15px}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px 16px;
+    margin-bottom:14px;
+  }
+  .step{display:flex;align-items:center;gap:8px;margin:0 0 12px}
+  .step .num{
+    flex:0 0 26px;width:26px;height:26px;border-radius:50%;
+    background:var(--brand-soft);color:var(--brand-ink);
+    font-size:13px;font-weight:700;display:grid;place-items:center;
+  }
+  .step h2{margin:0;font-size:17px;font-weight:700}
+  .step .hint{margin-inline-start:auto;font-size:12px;color:var(--ink-faint)}
+
+  .chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px}
+  .chip{
+    appearance:none;-webkit-tap-highlight-color:transparent;
+    border:1.5px solid var(--line);background:var(--card-soft);color:var(--ink);
+    border-radius:14px;padding:11px 8px;cursor:pointer;text-align:center;
+    font:inherit;font-size:14px;font-weight:600;
+    transition:transform .12s ease,border-color .12s ease,background .12s ease;
+    display:flex;flex-direction:column;align-items:center;gap:3px;min-height:62px;justify-content:center;
+  }
+  .chip .ic{font-size:20px;line-height:1}
+  .chip small{font-weight:500;font-size:11.5px;color:var(--ink-faint);display:block}
+  .chip:hover{border-color:var(--brand)}
+  .chip:active{transform:scale(.97)}
+  .chip[aria-checked="true"]{
+    background:var(--brand-soft);border-color:var(--brand);color:var(--brand-ink);
+    box-shadow:inset 0 0 0 1px var(--brand);
+  }
+  .chip[aria-checked="true"] small{color:var(--brand-ink);opacity:.8}
+  .chip:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+
+  .sub{margin-top:14px}
+  .sub-label{font-size:13px;font-weight:600;color:var(--ink-soft);margin:0 0 7px}
+
+  .counters{display:grid;gap:8px}
+  .counter{
+    display:flex;align-items:center;gap:10px;
+    background:var(--card-soft);border:1px solid var(--line);border-radius:14px;padding:8px 12px;
+  }
+  .counter .name{flex:1;font-size:14.5px;font-weight:600}
+  .counter .name small{display:block;font-weight:400;font-size:11.5px;color:var(--ink-faint)}
+  .counter .val{min-width:28px;text-align:center;font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+  .rnd{
+    width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);
+    background:var(--card);color:var(--brand-ink);font-size:20px;font-weight:700;line-height:1;
+    cursor:pointer;display:grid;place-items:center;padding:0;transition:transform .1s ease;
+  }
+  .rnd:hover{border-color:var(--brand)}
+  .rnd:active{transform:scale(.9)}
+  .rnd[disabled]{opacity:.35;cursor:not-allowed}
+
+  .toggles{display:grid;gap:7px}
+  .toggle{
+    display:flex;align-items:flex-start;gap:10px;cursor:pointer;
+    background:var(--card-soft);border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;
+    font-size:14px;transition:border-color .12s ease,background .12s ease;
+  }
+  .toggle:hover{border-color:var(--brand)}
+  .toggle input{
+    appearance:none;-webkit-appearance:none;margin:2px 0 0;flex:0 0 20px;width:20px;height:20px;
+    border:2px solid var(--ink-faint);border-radius:6px;background:var(--card);cursor:pointer;position:relative;
+  }
+  .toggle input:checked{background:var(--brand);border-color:var(--brand)}
+  .toggle input:checked::after{
+    content:"✓";position:absolute;inset:0;display:grid;place-items:center;
+    color:#fff;font-size:13px;font-weight:800;
+  }
+  .toggle input:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+  .toggle:has(input:checked){border-color:var(--brand);background:var(--brand-soft)}
+  .toggle .t-text{font-weight:600}
+  .toggle .t-text small{display:block;font-weight:400;font-size:11.5px;color:var(--ink-faint)}
+
+  .slider-row{margin-top:14px}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:6px;
+    background:linear-gradient(to left,var(--brand) 0%,var(--brand) 50%,var(--line) 50%,var(--line) 100%);
+    outline:none;margin:10px 0 4px;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;
+    border:3px solid var(--brand);cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:20px;height:20px;border-radius:50%;background:#fff;border:3px solid var(--brand);cursor:pointer;
+  }
+  .scale{display:flex;justify-content:space-between;font-size:11.5px;color:var(--ink-faint)}
+
+  /* result */
+  .result{
+    background:linear-gradient(150deg,#6d3bf5 0%,#9333ea 55%,#c026d3 100%);
+    color:#fff;border:none;text-align:center;padding:22px 16px 18px;position:relative;overflow:hidden;
+  }
+  .result::after{
+    content:"";position:absolute;inset:-40% -20% auto;height:200px;
+    background:radial-gradient(circle at 50% 0,rgba(255,255,255,.28),transparent 70%);pointer-events:none;
+  }
+  .result .lbl{font-size:13.5px;opacity:.9;margin:0}
+  .amount{font-size:clamp(44px,13vw,66px);font-weight:800;line-height:1.05;margin:2px 0 0;font-variant-numeric:tabular-nums;letter-spacing:-1px}
+  .range{font-size:14px;opacity:.92;margin:4px 0 0;font-variant-numeric:tabular-nums}
+  .verdict{
+    display:inline-block;margin-top:12px;background:rgba(255,255,255,.16);
+    border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 14px;font-size:13px;font-weight:600;
+  }
+  .breakdown{
+    display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px;
+    padding-top:14px;border-top:1px solid rgba(255,255,255,.22);
+  }
+  .bd{
+    background:rgba(255,255,255,.14);border-radius:999px;padding:4px 10px;font-size:12px;
+    display:inline-flex;gap:5px;align-items:center;
+  }
+  .bd b{font-weight:700}
+
+  .actions{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px}
+  .btn{
+    font:inherit;font-size:15px;font-weight:700;border-radius:14px;padding:13px 16px;cursor:pointer;
+    border:1.5px solid transparent;transition:transform .1s ease,opacity .12s ease;
+    display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  }
+  .btn:active{transform:scale(.98)}
+  .btn-share{background:#fff;color:var(--brand-ink)}
+  .btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
+
+  .note{font-size:12.5px;color:var(--ink-faint);text-align:center;margin:16px 0 0;padding:0 8px}
+  .note a{color:var(--brand-ink)}
+
+  .toast{
+    position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:90vw;
+    background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;font-weight:600;
+    opacity:0;transform:translateY(12px);transition:opacity .2s ease,transform .2s ease;pointer-events:none;z-index:9;
+  }
+  .toast.show{opacity:1;transform:translateY(0)}
+
+  .disabled-block{opacity:.4;pointer-events:none;filter:grayscale(.5)}
+  @media (max-width:380px){ .chips{grid-template-columns:repeat(2,1fr)} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <h1><span class="emoji">🎁</span> כמה לתת במתנה?</h1>
+    <p>עונים על כמה שאלות — ומקבלים סכום מומלץ, בלי להתלבט בכניסה לאולם.</p>
+  </header>
+
+  <!-- 1 -->
+  <section class="card">
+    <div class="step"><span class="num">1</span><h2>מה האירוע?</h2></div>
+    <div class="chips" id="events" role="radiogroup" aria-label="סוג האירוע"></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="card">
+    <div class="step"><span class="num">2</span><h2>מה הקשר שלכם לבעלי השמחה?</h2></div>
+    <div class="chips" id="relations" role="radiogroup" aria-label="מידת הקרבה"></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="card">
+    <div class="step"><span class="num">3</span><h2>איפה חוגגים?</h2></div>
+    <div class="chips" id="venues" role="radiogroup" aria-label="סוג המקום"></div>
+    <div class="sub">
+      <p class="sub-label">אזור בארץ</p>
+      <div class="chips" id="regions" role="radiogroup" aria-label="אזור"></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="card" id="guestsCard">
+    <div class="step"><span class="num">4</span><h2>מי מגיע מטעמכם?</h2><span class="hint">כולל אתכם</span></div>
+    <div class="counters" id="guests"></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="card">
+    <div class="step"><span class="num">5</span><h2>עוד משהו שכדאי לדעת?</h2></div>
+    <div class="toggles" id="mods"></div>
+
+    <div class="sub">
+      <p class="sub-label">מתחלקים במתנה?</p>
+      <div class="counters">
+        <div class="counter">
+          <div class="name">מספר המשפחות שמשתתפות במתנה<small>המתנה מחולקת שווה בשווה</small></div>
+          <button class="rnd" type="button" id="splitMinus" aria-label="פחות משתתפים">−</button>
+          <div class="val" id="splitVal" aria-live="polite">1</div>
+          <button class="rnd" type="button" id="splitPlus" aria-label="עוד משתתפים">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="slider-row">
+      <p class="sub-label">התקציב שלכם <span id="budgetLabel" style="color:var(--brand-ink)">רגיל</span></p>
+      <input type="range" id="budget" min="0" max="4" step="1" value="2" aria-label="רמת התקציב">
+      <div class="scale"><span>חסכוני</span><span>רגיל</span><span>ביד רחבה</span></div>
+    </div>
+  </section>
+
+  <!-- result -->
+  <section class="card result" aria-live="polite">
+    <p class="lbl" id="resultLabel">הסכום המומלץ למתנה</p>
+    <p class="amount" id="amount">₪0</p>
+    <p class="range" id="range"></p>
+    <div><span class="verdict" id="verdict"></span></div>
+    <div class="breakdown" id="breakdown"></div>
+    <div class="actions">
+      <button class="btn btn-share" id="shareBtn" type="button">📤 שיתוף התוצאה</button>
+      <button class="btn btn-ghost" id="resetBtn" type="button">איפוס</button>
+    </div>
+  </section>
+
+  <p class="note">
+    המספרים הם המלצה בלבד, מבוססת על נורמות מקובלות בישראל ועל הערכת עלות מנה.
+    בסוף — תנו מה שנעים ומתאים לכם. 💜
+  </p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONFIG — כל טבלאות החישוב במקום אחד. אפשר לכוונן בלי לגעת בקוד.
+   base  = הסכום ההתחלתי לאדם אחד (₪)
+   plate = עלות מנה משוערת לאדם (₪) — משמשת כרצפה: לא נותנים פחות מהמנה
+   mult  = מקדם הכפלה
+   ═══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  currency: 'ILS',
+  roundTo: 50,          // עיגול הסכום הסופי
+  rangeDown: 0.85,      // גבול תחתון של הטווח המוצג
+  rangeUp: 1.20,        // גבול עליון של הטווח המוצג
+  minGift: 100,         // מתחת לזה לא מציעים
+  notAttendingFactor: 0.55, // מתנה כשלא מגיעים לאירוע
+
+  events: {
+    wedding:   { label:'חתונה',        ic:'💍', base:450, plate:340 },
+    barmitzva: { label:'בר/בת מצווה',  ic:'🕎', base:360, plate:280 },
+    brit:      { label:'ברית / בריתה', ic:'👶', base:280, plate:180 },
+    henna:     { label:'חינה',         ic:'🪔', base:350, plate:250 },
+    engagement:{ label:'אירוסין',      ic:'💐', base:300, plate:190 },
+    birthday:  { label:'יום הולדת',    ic:'🎂', base:200, plate:120 }
+  },
+
+  relations: {
+    family1:  { label:'משפחה קרובה', note:'הורים, אחים', mult:1.75 },
+    family2:  { label:'משפחה',       note:'דודים, בני דודים', mult:1.25 },
+    bff:      { label:'חבר קרוב',    note:'מהחבר׳ה', mult:1.30 },
+    friend:   { label:'חבר',         note:'נפגשים מדי פעם', mult:1.00 },
+    colleague:{ label:'עמית לעבודה', note:'קולגה', mult:0.85 },
+    acquaint: { label:'מכר / שכן',   note:'קשר רחוק', mult:0.75 }
+  },
+
+  venues: {
+    luxury:  { label:'אולם יוקרתי', ic:'✨', mult:1.25, plate:1.45 },
+    hall:    { label:'אולם רגיל',   ic:'🏛️', mult:1.00, plate:1.00 },
+    garden:  { label:'גן אירועים',  ic:'🌿', mult:1.05, plate:1.10 },
+    resto:   { label:'מסעדה',       ic:'🍽️', mult:1.05, plate:1.05 },
+    home:    { label:'בית / חצר',   ic:'🏡', mult:0.75, plate:0.45 }
+  },
+
+  regions: {
+    center: { label:'תל אביב והמרכז', mult:1.15 },
+    sharon: { label:'שרון / שפלה',    mult:1.05 },
+    jlm:    { label:'ירושלים',        mult:1.00 },
+    north:  { label:'צפון',           mult:0.92 },
+    south:  { label:'דרום',           mult:0.92 }
+  },
+
+  // כמה "שווה" כל אורח בחישוב (מבוגר = 1)
+  guests: [
+    { id:'adults',   label:'מבוגרים',  note:'מגיל 18',       weight:1.00, def:2, max:12 },
+    { id:'teens',    label:'נוער',     note:'גילאי 13–17',   weight:0.80, def:0, max:10 },
+    { id:'kids',     label:'ילדים',    note:'גילאי 5–12',    weight:0.45, def:0, max:10 },
+    { id:'toddlers', label:'פעוטות',   note:'עד גיל 4',      weight:0.00, def:0, max:10 }
+  ],
+
+  modifiers: [
+    { id:'notAttending', label:'אנחנו לא מגיעים לאירוע', note:'שולחים מתנה בלבד', special:'notAttending' },
+    { id:'generousPast', label:'הם נתנו לנו מתנה נדיבה בעבר', note:'מקובל להחזיר בדומה', mult:1.12 },
+    { id:'destination',  label:'אירוע יעד / חו״ל', note:'הטיסה והלינה עלו לכם', mult:0.85 },
+    { id:'secondEvent',  label:'זה האירוע השני שלהם השנה', note:'למשל ברית אחרי חתונה', mult:0.90 },
+    { id:'closeCircle',  label:'המתנה נמסרת בשם כל המשפחה שלנו', note:'אחים, הורים וכו׳', mult:1.15 }
+  ],
+
+  budgets: [
+    { label:'חסכוני מאוד', mult:0.78 },
+    { label:'חסכוני',      mult:0.90 },
+    { label:'רגיל',        mult:1.00 },
+    { label:'נדיב',        mult:1.12 },
+    { label:'ביד רחבה',    mult:1.28 }
+  ],
+
+  // הודעת סיכום לפי היחס בין המתנה לעלות המנה
+  verdicts: [
+    { min:0.00, text:'מכסה חלק מהמנה — מתאים כשלא מגיעים או כשהקשר רחוק' },
+    { min:1.00, text:'מכסה את המנה — סכום מכובד ומקובל' },
+    { min:1.25, text:'מעל עלות המנה — מתנה נדיבה ובטוחה' },
+    { min:1.70, text:'מתנה מאוד נדיבה — מתאימה לקשר קרוב במיוחד' }
+  ],
+
+  defaults: { event:'wedding', relation:'friend', venue:'hall', region:'center', budget:2 },
+
+  share: {
+    url: 'https://shayh22.github.io/movie-ticket-booking/',
+    title: 'כמה לתת במתנה? 🎁'
+  },
+
+  storageKey: 'gift-calc-v1'
+};
+
+/* ═══════════════ מצב ═══════════════ */
+const state = {
+  event: CONFIG.defaults.event,
+  relation: CONFIG.defaults.relation,
+  venue: CONFIG.defaults.venue,
+  region: CONFIG.defaults.region,
+  budget: CONFIG.defaults.budget,
+  split: 1,
+  guests: {},
+  mods: {}
+};
+CONFIG.guests.forEach(g => state.guests[g.id] = g.def);
+CONFIG.modifiers.forEach(m => state.mods[m.id] = false);
+
+const $ = sel => document.querySelector(sel);
+const nis = new Intl.NumberFormat('he-IL', {
+  style:'currency', currency:CONFIG.currency, maximumFractionDigits:0, minimumFractionDigits:0
+});
+const roundTo = (n, step) => Math.round(n / step) * step;
+
+/* ═══════════════ בניית ממשק ═══════════════ */
+function buildChips(container, table, key, withNote){
+  container.innerHTML = '';
+  Object.entries(table).forEach(([id, item]) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'chip';
+    btn.setAttribute('role','radio');
+    btn.dataset.id = id;
+    btn.innerHTML =
+      (item.ic ? `<span class="ic">${item.ic}</span>` : '') +
+      `<span>${item.label}</span>` +
+      (withNote && item.note ? `<small>${item.note}</small>` : '');
+    btn.addEventListener('click', () => { state[key] = id; syncChips(container, key); calc(); save(); });
+    container.appendChild(btn);
+  });
+  syncChips(container, key);
+}
+function syncChips(container, key){
+  container.querySelectorAll('.chip').forEach(c => {
+    const on = c.dataset.id === state[key];
+    c.setAttribute('aria-checked', on ? 'true' : 'false');
+    c.tabIndex = on ? 0 : -1;
+  });
+}
+
+function buildGuests(){
+  const box = $('#guests');
+  box.innerHTML = '';
+  CONFIG.guests.forEach(g => {
+    const row = document.createElement('div');
+    row.className = 'counter';
+    row.innerHTML = `
+      <div class="name">${g.label}<small>${g.note}</small></div>
+      <button class="rnd" type="button" data-act="-" aria-label="הפחתת ${g.label}">−</button>
+      <div class="val" id="v-${g.id}" aria-live="polite">${state.guests[g.id]}</div>
+      <button class="rnd" type="button" data-act="+" aria-label="הוספת ${g.label}">+</button>`;
+    row.querySelectorAll('.rnd').forEach(b => b.addEventListener('click', () => {
+      const d = b.dataset.act === '+' ? 1 : -1;
+      state.guests[g.id] = Math.min(g.max, Math.max(0, state.guests[g.id] + d));
+      $('#v-' + g.id).textContent = state.guests[g.id];
+      refreshGuestButtons(); calc(); save();
+    }));
+    box.appendChild(row);
+  });
+  refreshGuestButtons();
+}
+function refreshGuestButtons(){
+  CONFIG.guests.forEach((g, i) => {
+    const row = $('#guests').children[i];
+    row.querySelector('[data-act="-"]').disabled = state.guests[g.id] <= 0;
+    row.querySelector('[data-act="+"]').disabled = state.guests[g.id] >= g.max;
+    $('#v-' + g.id).textContent = state.guests[g.id];
+  });
+}
+
+function buildMods(){
+  const box = $('#mods');
+  box.innerHTML = '';
+  CONFIG.modifiers.forEach(m => {
+    const lab = document.createElement('label');
+    lab.className = 'toggle';
+    lab.innerHTML = `<input type="checkbox" id="m-${m.id}">
+      <span class="t-text">${m.label}<small>${m.note}</small></span>`;
+    const input = lab.querySelector('input');
+    input.checked = !!state.mods[m.id];
+    input.addEventListener('change', () => { state.mods[m.id] = input.checked; calc(); save(); });
+    box.appendChild(lab);
+  });
+}
+
+function buildSplit(){
+  const upd = () => {
+    $('#splitVal').textContent = state.split;
+    $('#splitMinus').disabled = state.split <= 1;
+    $('#splitPlus').disabled = state.split >= 10;
+  };
+  $('#splitMinus').addEventListener('click', () => { state.split = Math.max(1, state.split - 1); upd(); calc(); save(); });
+  $('#splitPlus').addEventListener('click', () => { state.split = Math.min(10, state.split + 1); upd(); calc(); save(); });
+  upd();
+}
+
+function buildBudget(){
+  const sl = $('#budget');
+  sl.value = state.budget;
+  const paint = () => {
+    const pct = (sl.value / (CONFIG.budgets.length - 1)) * 100;
+    // הסליידר RTL: המילוי מתחיל מימין (מינימום) לכיוון שמאל
+    sl.style.background = `linear-gradient(to left,var(--brand) 0%,var(--brand) ${pct}%,var(--line) ${pct}%,var(--line) 100%)`;
+    $('#budgetLabel').textContent = CONFIG.budgets[sl.value].label;
+  };
+  sl.addEventListener('input', () => { state.budget = +sl.value; paint(); calc(); save(); });
+  paint();
+}
+
+/* ═══════════════ החישוב ═══════════════ */
+function compute(){
+  const ev  = CONFIG.events[state.event];
+  const rel = CONFIG.relations[state.relation];
+  const ven = CONFIG.venues[state.venue];
+  const reg = CONFIG.regions[state.region];
+  const bud = CONFIG.budgets[state.budget];
+  const notAttending = !!state.mods.notAttending;
+
+  // משקל האורחים
+  let weight = 0, heads = 0;
+  CONFIG.guests.forEach(g => { weight += state.guests[g.id] * g.weight; heads += state.guests[g.id]; });
+  if (!notAttending && weight === 0) weight = 1; // תמיד לפחות אדם אחד
+
+  // מקדמי ההתאמות שנבחרו
+  let modMult = 1;
+  const activeMods = [];
+  CONFIG.modifiers.forEach(m => {
+    if (state.mods[m.id] && m.mult){ modMult *= m.mult; activeMods.push(m.label); }
+  });
+
+  // עלות מנה משוערת
+  const plateCost = notAttending ? 0 : roundTo(ev.plate * ven.plate * reg.mult * weight, 10);
+
+  let total;
+  if (notAttending){
+    total = ev.base * rel.mult * reg.mult * CONFIG.notAttendingFactor * modMult * bud.mult;
+  } else {
+    total = ev.base * weight * rel.mult * ven.mult * reg.mult * modMult * bud.mult;
+    total = Math.max(total, plateCost); // רצפה: לפחות עלות המנה
+  }
+
+  total = Math.max(CONFIG.minGift, roundTo(total, CONFIG.roundTo));
+
+  const perFamily = Math.max(CONFIG.minGift, roundTo(total / state.split, CONFIG.roundTo));
+  const shown = state.split > 1 ? perFamily : total;
+
+  const ratio = plateCost > 0 ? total / plateCost : 0;
+  let verdict = CONFIG.verdicts[0].text;
+  CONFIG.verdicts.forEach(v => { if (ratio >= v.min) verdict = v.text; });
+  if (total <= CONFIG.minGift) verdict = 'סכום מינימלי מכובד לאירוע קטן או קשר רחוק';
+  if (notAttending) verdict = 'מתנה ללא השתתפות באירוע — אין עלות מנה לכסות';
+
+  return {
+    total, shown, perFamily, plateCost, heads, weight, notAttending, activeMods,
+    min: Math.max(CONFIG.minGift, roundTo(shown * CONFIG.rangeDown, CONFIG.roundTo)),
+    max: roundTo(shown * CONFIG.rangeUp, CONFIG.roundTo),
+    verdict,
+    labels: { event: ev.label, relation: rel.label, venue: ven.label, region: reg.label, budget: bud.label }
+  };
+}
+
+/* ═══════════════ תצוגה ═══════════════ */
+let animFrom = 0, animId = null;
+function animateAmount(to){
+  cancelAnimationFrame(animId);
+  const from = animFrom, start = performance.now(), dur = 380;
+  const tick = now => {
+    const t = Math.min(1, (now - start) / dur);
+    const eased = 1 - Math.pow(1 - t, 3);
+    const val = Math.round((from + (to - from) * eased) / 10) * 10;
+    $('#amount').textContent = nis.format(t === 1 ? to : val);
+    if (t < 1) animId = requestAnimationFrame(tick);
+  };
+  animId = requestAnimationFrame(tick);
+  animFrom = to;
+}
+
+let last = null;
+function calc(){
+  const r = compute();
+  last = r;
+
+  $('#guestsCard').classList.toggle('disabled-block', r.notAttending);
+  $('#resultLabel').textContent = state.split > 1 ? 'החלק שלכם במתנה המשותפת' : 'הסכום המומלץ למתנה';
+
+  animateAmount(r.shown);
+  $('#range').textContent = `טווח סביר: ${nis.format(r.min)} – ${nis.format(r.max)}`;
+  $('#verdict').textContent = r.verdict;
+
+  const bits = [
+    `<span class="bd">${r.labels.event}</span>`,
+    `<span class="bd">${r.labels.relation}</span>`,
+    `<span class="bd">${r.labels.venue} · ${r.labels.region}</span>`
+  ];
+  if (!r.notAttending){
+    bits.push(`<span class="bd">👥 <b>${r.heads}</b> מוזמנים מטעמכם</span>`);
+    bits.push(`<span class="bd">🍽️ מנה ≈ <b>${nis.format(r.plateCost)}</b></span>`);
+  }
+  if (state.split > 1) bits.push(`<span class="bd">סה״כ המתנה <b>${nis.format(r.total)}</b> ÷ ${state.split}</span>`);
+  r.activeMods.forEach(m => bits.push(`<span class="bd">${m}</span>`));
+  $('#breakdown').innerHTML = bits.join('');
+}
+
+/* ═══════════════ שיתוף ═══════════════ */
+function shareText(){
+  const r = last || compute();
+  const who = state.split > 1 ? 'החלק שלנו במתנה' : 'הסכום המומלץ';
+  return `🎁 כמה לתת במתנה?\n${r.labels.event} · ${r.labels.relation} · ${r.labels.venue}\n${who}: ${nis.format(r.shown)} (טווח ${nis.format(r.min)}–${nis.format(r.max)})\n\nתבדקו גם אתם:`;
+}
+function shareUrl(){
+  return location.protocol.startsWith('http') ? location.href.split('#')[0] : CONFIG.share.url;
+}
+async function doShare(){
+  const text = shareText(), url = shareUrl();
+  if (navigator.share){
+    try { await navigator.share({ title: CONFIG.share.title, text, url }); return; }
+    catch(e){ if (e && e.name === 'AbortError') return; }
+  }
+  window.open('https://wa.me/?text=' + encodeURIComponent(text + '\n' + url), '_blank', 'noopener');
+}
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._id); t._id = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ═══════════════ שמירה מקומית ═══════════════ */
+function save(){
+  try { localStorage.setItem(CONFIG.storageKey, JSON.stringify(state)); } catch(e){}
+}
+function load(){
+  try {
+    const raw = localStorage.getItem(CONFIG.storageKey);
+    if (!raw) return;
+    const s = JSON.parse(raw);
+    if (CONFIG.events[s.event]) state.event = s.event;
+    if (CONFIG.relations[s.relation]) state.relation = s.relation;
+    if (CONFIG.venues[s.venue]) state.venue = s.venue;
+    if (CONFIG.regions[s.region]) state.region = s.region;
+    if (Number.isInteger(s.budget) && CONFIG.budgets[s.budget]) state.budget = s.budget;
+    if (Number.isInteger(s.split)) state.split = Math.min(10, Math.max(1, s.split));
+    CONFIG.guests.forEach(g => {
+      const v = s.guests && s.guests[g.id];
+      if (Number.isInteger(v)) state.guests[g.id] = Math.min(g.max, Math.max(0, v));
+    });
+    CONFIG.modifiers.forEach(m => { if (s.mods) state.mods[m.id] = !!s.mods[m.id]; });
+  } catch(e){}
+}
+function reset(){
+  Object.assign(state, CONFIG.defaults, { split:1 });
+  CONFIG.guests.forEach(g => state.guests[g.id] = g.def);
+  CONFIG.modifiers.forEach(m => state.mods[m.id] = false);
+  try { localStorage.removeItem(CONFIG.storageKey); } catch(e){}
+  render();
+  toast('הכול חזר להתחלה');
+}
+
+/* ═══════════════ הפעלה ═══════════════ */
+function render(){
+  buildChips($('#events'), CONFIG.events, 'event', false);
+  buildChips($('#relations'), CONFIG.relations, 'relation', true);
+  buildChips($('#venues'), CONFIG.venues, 'venue', false);
+  buildChips($('#regions'), CONFIG.regions, 'region', false);
+  buildGuests();
+  buildMods();
+  $('#budget').value = state.budget;
+  $('#budget').dispatchEvent(new Event('input'));
+  $('#splitVal').textContent = state.split;
+  $('#splitMinus').disabled = state.split <= 1;
+  $('#splitPlus').disabled = state.split >= 10;
+  calc();
+}
+
+load();
+buildSplit();
+buildBudget();
+render();
+$('#shareBtn').addEventListener('click', doShare);
+$('#resetBtn').addEventListener('click', reset);
+</script>
+</body>
+</html>
