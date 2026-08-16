@@ -1,109 +1,133 @@
-# Matana
+# 🎁 כמה לתת במתנה?
 
-This project is a Spring Boot-based RESTful API for managing movie tickets, including users, movies, showtimes, and ticket bookings.
+מחשבון עברי (RTL) שמחשב כמה כסף מקובל לתת במתנה בחתונה, בר/בת מצווה, ברית,
+חינה, אירוסין או יום הולדת — לפי מידת הקרבה, סוג האולם, האזור בארץ ומי מגיע מטעמכם.
 
-> **Also in this repo:** `index.html` — a standalone Hebrew gift-amount calculator ("כמה לתת במתנה?") served via GitHub Pages. See [README-gift-calculator.md](README-gift-calculator.md)
+**דמו:** https://shayh22.github.io/matana/
 
-## Features
+עמוד סטטי אחד. בלי ספריות, בלי build, בלי שרת — `index.html` נפתח ישירות בדפדפן.
 
-- User authentication and role-based access control (Admin, Customer)
-- CRUD operations for movies, showtimes, and tickets
-- Secure JWT-based authentication
-- Database persistence using JPA and PostgreSQL
-- API documentation using Swagger
-- **JUnit & MockMvc** for testing
+## מה יש בו
 
-## Tech Stack
+- בחירת סוג אירוע, מידת קרבה, סוג המקום ואזור בארץ
+- ספירת אורחים לפי גיל (מבוגרים / נוער / ילדים / פעוטות)
+- התאמות: לא מגיעים לאירוע, אירוע יעד, מתנה בשם כל המשפחה ועוד
+- חלוקת המתנה בין כמה משפחות + סליידר תקציב
+- רצפת חישוב לפי עלות מנה משוערת — כדי לא לתת פחות מהמנה
+- טווח סביר ופירוט השיקולים מתחת לסכום
+- שמירה אוטומטית של הבחירות ב-`localStorage`
+- שיתוף: `navigator.share` אם נתמך, אחרת `wa.me` עם טקסט מוכן
+- מצב כהה אוטומטי לפי הגדרות המערכת
 
-- **Spring Boot 3** (Web, Security, Data JPA)
-- **PostgreSQL** as the database
-- **Lombok** for reducing boilerplate code
-- **Spring Security** for authentication & authorization
-- **Swagger/OpenAPI** for API documentation
-- **JUnit & MockMvc** for testing
-
-## Installation & Setup
-
-### Prerequisites
-
-- Java 17+
-- Maven
-- PostgreSQL (Ensure a database is created and update `application.properties` accordingly)
-
-### Clone the Repository
+## הרצה מקומית
 
 ```sh
-$ git clone https://github.com/shayh22/matana.git
-$ cd matana
+open index.html        # macOS · בלינוקס xdg-order/xdg-open · בווינדוס start
 ```
 
-### Configure Database
-
-Update the `src/main/resources/application.properties` file with your database details:
-
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/movie_ticket_db
-spring.datasource.username=your_db_user
-spring.datasource.password=your_db_password
-spring.jpa.hibernate.ddl-auto=update
-```
-
-### Build and Run
+לבדיקה תחת `http://` (למשל כדי לבדוק שיתוף):
 
 ```sh
-$ mvn clean install
-$ mvn spring-boot:run
+python3 -m http.server 8000   # ואז http://localhost:8000
 ```
 
-## API Endpoints
+## פרסום
 
-### Authentication
+GitHub Pages מהענף `main`, תיקיית `/ (root)`:
+**Settings → Pages → Source: Deploy from a branch → main → / (root)**.
+הקובץ `.nojekyll` מונע מגיטהאב לנסות לבנות את זה כאתר Jekyll.
 
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Authenticate user and get JWT token
+### חיבור דומיין
 
-### Movies
+1. ב-DNS של הדומיין: ארבע רשומות `A` בשורש —
+   `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`,
+   ורשומת `CNAME` מ-`www` ל-`shayh22.github.io`.
+2. **Settings → Pages → Custom domain** → להזין את הדומיין → לסמן **Enforce HTTPS**.
+   גיטהאב יוסיף קובץ `CNAME` לריפו בעצמו.
+3. להחליף את הכתובות לדומיין החדש: ב-`index.html` שלוש כתובות
+   `og:`/`twitter:` ו-`CONFIG.share.url`, בשני עמודי התוכן את `canonical`
+   ו-`og:`, וכן ב-`sitemap.xml` וב-`robots.txt`. (עד שזה נעשה גיטהאב מפנה מהכתובת הישנה,
+   כך שהתצוגה המקדימה בוואטסאפ ממשיכה לעבוד.)
 
-- `GET /api/movies` - Retrieve all movies
-- `POST /api/movies` (Admin) - Add a new movie
-- `PUT /api/movies/{id}` (Admin) - Update movie details
-- `DELETE /api/movies/{id}` (Admin) - Remove a movie
+> אם משתמשים ב-Cloudflare ל-DNS: להשאיר את הרשומות **DNS only** (ענן אפור)
+> עד שגיטהאב מנפיק תעודת SSL, אחרת ההנפקה נתקעת.
 
-### Showtimes
+## כוונון המספרים
 
-- `GET /api/showtimes` - List all showtimes
-- `POST /api/showtimes` (Admin) - Create a showtime
+כל טבלאות החישוב יושבות באובייקט `CONFIG` בראש ה-`<script>` שבתוך `index.html`:
 
-### Tickets
+| מפתח | מה זה |
+|---|---|
+| `events` | `base` = סכום התחלתי לאדם, `plate` = עלות מנה משוערת |
+| `relations` / `venues` / `regions` | מקדמי הכפלה (`mult`) |
+| `guests` | כמה "שווה" כל אורח בחישוב (`weight`) |
+| `modifiers` | תיבות הסימון והמקדם של כל אחת |
+| `budgets` | חמש רמות הסליידר |
+| `roundTo` / `rangeDown` / `rangeUp` / `minGift` | עיגול, טווח ומינימום |
+| `share` | כותרת וכתובת ברירת מחדל לשיתוף |
 
-- `GET /api/tickets` (Authenticated users) - View user tickets
-- `POST /api/tickets/book` (Authenticated users) - Book a ticket
+הנוסחה:
 
-## Changes & Updates
-
-- **User object replaced with userId** in `Ticket` entity for better efficiency.
-- **Improved role-based access control** in controllers.
-- **Optimized test cases** to ensure proper isolation.
-
-## Running Tests
-
-```sh
-$ mvn test
+```
+base × משקל האורחים × קרבה × מקום × אזור × התאמות × תקציב
 ```
 
-## Deployment
+עם רצפה של עלות המנה המשוערת ועיגול ל-50 ₪.
 
-To deploy the app using Docker:
+המספרים הם המלצה המבוססת על נורמות מקובלות — לא כלל.
 
-```sh
-$ docker build -t matana .
-$ docker run -p 8080:8080 matana
+## מדידת תעבורה ומונה ביקורים
+
+שני השירותים מוגדרים בראש `site.js` ו**כבויים כברירת מחדל** — כל עוד השדות
+ריקים העמוד לא טוען שום סקריפט חיצוני ולא שולח אף בקשה. שניהם בלי עוגיות,
+ולכן לא נדרש באנר הסכמה.
+
+```js
+const ANALYTICS = {
+  goatcounter: '',      // הקוד מ-GoatCounter, למשל 'matana'
+  cloudflareToken: '',  // אופציונלי, מ-Cloudflare Web Analytics
+  counterPath: 'TOTAL',
+  counterMin: 25
+};
 ```
 
-## Contributing
+**GoatCounter** (חינם): נרשמים ב-<https://www.goatcounter.com>, מקבלים כתובת
+בסגנון `https://matana.goatcounter.com`, ומכניסים ל-`goatcounter` את הקוד
+בלבד (`matana`). זה מפעיל גם את מדידת התעבורה וגם את מונה הביקורים שמופיע
+בתחתית העמודים.
 
-Feel free to fork this repository and submit pull requests for improvements.
+**Cloudflare Web Analytics** (אופציונלי, חינם): Dashboard → Web Analytics →
+Add a site → מעתיקים את ה-token ל-`cloudflareToken`.
 
-## License
+מונה הביקורים מוסתר כברירת מחדל ומופיע רק כשיש נתון אמיתי מעל `counterMin`
+(ברירת מחדל 25). כל תקלה — אין חשבון, חסימת CORS, אופליין — משאירה אותו
+מוסתר במקום להציג שגיאה. מדידה לא רצה כלל בפתיחה מקומית (`file://` או
+`localhost`), כדי לא ללכלך את הנתונים בזמן פיתוח.
 
-This project is licensed under the MIT License.
+בנוסף כדאי לחבר את האתר ל-**Google Search Console** (חינם) — זה מה שמראה
+אילו חיפושים בעברית באמת מביאים אנשים. הסייטמאפ מוכן ב-`sitemap.xml`.
+
+## עמודי תוכן
+
+- `wedding.html` — כמה נותנים במתנה בחתונה: עלות מנה, טבלת סכומים לפי קרבה, ואיך מעבירים את הכסף
+- `bar-mitzva.html` — כמה נותנים בבר ובת מצווה: קידוש מול אולם, ומה נותנים לילד עצמו
+
+שני העמודים מקושרים הדדית ומהמחשבון, ומכילים סימון `FAQPage` של Schema.org
+כדי שהשאלות יוכלו להופיע ישירות בתוצאות החיפוש. הסכומים בהם עקביים עם
+טבלאות ה-`CONFIG` שבמחשבון — אם משנים שם, כדאי לעדכן גם כאן.
+
+## קבצים
+
+| קובץ | תפקיד |
+|---|---|
+| `index.html` | המחשבון — HTML + CSS + JS בקובץ אחד |
+| `wedding.html` / `bar-mitzva.html` | עמודי התוכן |
+| `article.css` | עיצוב משותף לעמודי התוכן |
+| `site.js` | מדידת תעבורה ומונה ביקורים, משותף לכל העמודים |
+| `og-image.png` | תמונת תצוגה מקדימה לשיתוף, 1200×630 |
+| `sitemap.xml` / `robots.txt` | לסריקה ול-Search Console |
+| `.nojekyll` | קובץ ריק ל-GitHub Pages |
+
+## רישיון
+
+MIT

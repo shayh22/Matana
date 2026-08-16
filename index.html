@@ -6,21 +6,27 @@
 <title>כמה לתת במתנה? מחשבון מתנות לאירועים</title>
 <meta name="description" content="מחשבון עברי שמחשב כמה כסף מקובל לתת במתנה בחתונה, בר מצווה, ברית ואירועים נוספים — לפי הקשר שלכם, סוג האולם, האזור ומספר האורחים.">
 <meta name="theme-color" content="#6d3bf5">
+<link rel="canonical" href="https://shayh22.github.io/matana/">
 
+<!-- ═══ כתובת הפרסום ═══
+     כרגע: https://shayh22.github.io/matana/
+     אחרי חיבור דומיין: להחליף ל-https://kamalatet.com/ בשלושת ה-meta למטה
+     וב-CONFIG.share.url שבתחתית ה-script. עד אז גיטהאב מפנה אוטומטית,
+     כך שהתצוגה המקדימה בוואטסאפ ממשיכה לעבוד גם בלי לשנות. -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="כמה לתת במתנה?">
 <meta property="og:locale" content="he_IL">
-<meta property="og:url" content="https://shayh22.github.io/movie-ticket-booking/">
+<meta property="og:url" content="https://shayh22.github.io/matana/">
 <meta property="og:title" content="כמה לתת במתנה? 🎁">
 <meta property="og:description" content="חתונה? בר מצווה? ברית? עונים על כמה שאלות ומקבלים סכום מומלץ — לפי הקרבה, האולם, האזור וכמה אנשים מגיעים.">
-<meta property="og:image" content="https://shayh22.github.io/movie-ticket-booking/og-image.png">
+<meta property="og:image" content="https://shayh22.github.io/matana/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="מחשבון מתנות לאירועים בעברית">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="כמה לתת במתנה? 🎁">
 <meta name="twitter:description" content="מחשבון מתנות לאירועים — סכום מומלץ בכמה קליקים.">
-<meta name="twitter:image" content="https://shayh22.github.io/movie-ticket-booking/og-image.png">
+<meta name="twitter:image" content="https://shayh22.github.io/matana/og-image.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
 
 <style>
@@ -216,6 +222,18 @@
   }
   .toast.show{opacity:1;transform:translateY(0)}
 
+  .guides .step .num{font-size:15px}
+  .more{display:grid;gap:8px}
+  .more a{
+    display:block;background:var(--card-soft);border:1.5px solid var(--line);border-radius:14px;
+    padding:12px 14px;text-decoration:none;color:var(--ink);font-weight:700;font-size:15px;
+    transition:border-color .12s ease;
+  }
+  .more a:hover{border-color:var(--brand)}
+  .more a small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-faint);margin-top:2px}
+  #visitCounter{margin-top:6px}
+  #visitCounter b{color:var(--ink-soft)}
+
   .disabled-block{opacity:.4;pointer-events:none;filter:grayscale(.5)}
   @media (max-width:380px){ .chips{grid-template-columns:repeat(2,1fr)} }
 </style>
@@ -293,10 +311,19 @@
     </div>
   </section>
 
+  <section class="card guides">
+    <div class="step"><span class="num">📖</span><h2>רוצים להעמיק?</h2></div>
+    <div class="more">
+      <a href="wedding.html">💍 כמה נותנים במתנה בחתונה<small>עלות מנה, טבלת סכומים לפי קרבה, ואיך מעבירים את הכסף</small></a>
+      <a href="bar-mitzva.html">🕎 כמה נותנים בבר מצווה ובת מצווה<small>קידוש בבית כנסת מול אולם, ומה נותנים לילד עצמו</small></a>
+    </div>
+  </section>
+
   <p class="note">
     המספרים הם המלצה בלבד, מבוססת על נורמות מקובלות בישראל ועל הערכת עלות מנה.
     בסוף — תנו מה שנעים ומתאים לכם. 💜
   </p>
+  <p class="note" id="visitCounter" hidden>👀 <b data-count>0</b> בדיקות באתר עד כה</p>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -385,7 +412,7 @@ const CONFIG = {
   defaults: { event:'wedding', relation:'friend', venue:'hall', region:'center', budget:2 },
 
   share: {
-    url: 'https://shayh22.github.io/movie-ticket-booking/',
+    url: 'https://shayh22.github.io/matana/',
     title: 'כמה לתת במתנה? 🎁'
   },
 
@@ -678,5 +705,6 @@ render();
 $('#shareBtn').addEventListener('click', doShare);
 $('#resetBtn').addEventListener('click', reset);
 </script>
+<script src="site.js"></script>
 </body>
 </html>

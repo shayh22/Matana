@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://shayh22.github.io/matana/sitemap.xml
