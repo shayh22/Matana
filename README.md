@@ -84,10 +84,10 @@ base × משקל האורחים × קרבה × מקום × אזור × התאמ�
 
 ```js
 const ANALYTICS = {
-  goatcounter: '',      // הקוד מ-GoatCounter, למשל 'matana'
+  goatcounter: 'matana',// הקוד מ-GoatCounter (הוגדר)
   cloudflareToken: '',  // אופציונלי, מ-Cloudflare Web Analytics
   counterPath: 'TOTAL',
-  counterMin: 25
+  counterMin: 1
 };
 ```
 
@@ -99,8 +99,8 @@ const ANALYTICS = {
 **Cloudflare Web Analytics** (אופציונלי, חינם): Dashboard → Web Analytics →
 Add a site → מעתיקים את ה-token ל-`cloudflareToken`.
 
-מונה הביקורים מוסתר כברירת מחדל ומופיע רק כשיש נתון אמיתי מעל `counterMin`
-(ברירת מחדל 25). כל תקלה — אין חשבון, חסימת CORS, אופליין — משאירה אותו
+מונה הביקורים מופיע רק כשיש נתון אמיתי מעל `counterMin` (מוגדר 1, כלומר
+מהביקור הראשון; אפשר להעלות אם לא רוצים להציג מספרים קטנים). כל תקלה — אין חשבון, חסימת CORS, אופליין — משאירה אותו
 מוסתר במקום להציג שגיאה. מדידה לא רצה כלל בפתיחה מקומית (`file://` או
 `localhost`), כדי לא ללכלך את הנתונים בזמן פיתוח.
 

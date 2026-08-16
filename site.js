@@ -16,10 +16,10 @@
    שני השירותים לא מציבים עוגיות, ולכן לא נדרש באנר הסכמה.
    ═══════════════════════════════════════════════════════════════ */
 const ANALYTICS = {
-  goatcounter: '',        // לדוגמה: 'matana'
+  goatcounter: 'matana',  // https://matana.goatcounter.com
   cloudflareToken: '',    // לדוגמה: 'a1b2c3d4...'
   counterPath: 'TOTAL',   // 'TOTAL' = כל האתר, או '/index.html' לעמוד בודד
-  counterMin: 25          // מתחת לזה המונה מוסתר — עדיף בלי מספר מאשר מספר עלוב
+  counterMin: 1           // מתחת לזה המונה מוסתר. 1 = להציג מהביקור הראשון
 };
 
 (function () {
@@ -55,7 +55,7 @@ const ANALYTICS = {
     if (!el || !ANALYTICS.goatcounter || isLocal) return;
 
     try {
-      const url = `https://${ANALYTICS.goatcounter}.goatcounter.com/counter/${encodeURIComponent(ANALYTICS.counterPath)}.json`;
+      const url = `https://${ANALYTICS.goatcounter}.goatcounter.com/counter/${ANALYTICS.counterPath}.json`;
       const res = await fetch(url, { mode: 'cors' });
       if (!res.ok) return;
 
