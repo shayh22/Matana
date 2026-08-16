@@ -8,7 +8,9 @@
    1) GoatCounter  — https://www.goatcounter.com  (חינם, בלי עוגיות)
       נרשמים, מקבלים כתובת בסגנון  https://matana.goatcounter.com
       ומכניסים כאן רק את הקוד עצמו: 'matana'.
-      הוא גם מזין את מונה הביקורים שבתחתית העמוד.
+      הוא גם מזין את מונה הביקורים שבתחתית העמוד — אבל לשם כך חובה לסמן
+      בהגדרות האתר שם את 'allow using the visitor counter', אחרת נקודת
+      הקצה מחזירה 403 והמונה נשאר מוסתר.
 
    2) Cloudflare Web Analytics — אופציונלי, גם חינם ובלי עוגיות.
       Dashboard → Web Analytics → Add a site → מעתיקים את ה-token.
