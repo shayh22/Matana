@@ -35,6 +35,8 @@ const ANALYTICS = {
       s.async = true;
       s.src = 'https://gc.zgo.at/count.js';
       s.setAttribute('data-goatcounter', `https://${ANALYTICS.goatcounter}.goatcounter.com/count`);
+      s.onload = () => log('✓ count.js נטען — הביקור נספר');
+      s.onerror = () => log('✗ count.js לא נטען — כמעט תמיד חוסם פרסומות בדפדפן שלכם');
       document.head.appendChild(s);
     }
 
@@ -49,23 +51,43 @@ const ANALYTICS = {
 
   /* ── מונה הביקורים המוצג בעמוד ──
      GoatCounter חושף מונה ציבורי ב-/counter/<path>.json.
-     כל כישלון (אין חשבון, חסימת CORS, אופליין) פשוט משאיר את המונה מוסתר. */
+     כל כישלון (אין חשבון, חסימת CORS, אופליין) פשוט משאיר את המונה מוסתר.
+
+     לאבחון: מוסיפים ?debug=1 לכתובת ופותחים את הקונסול (F12). כל שלב
+     בשרשרת ידווח על עצמו, כולל הסיבה המדויקת שבגללה המונה לא הוצג. */
+  const DEBUG = /[?&]debug=1(&|$)/.test(location.search);
+  const log = (...a) => { if (DEBUG) console.log('%c[counter]', 'color:#6d3bf5;font-weight:bold', ...a); };
+
   async function counter() {
     const el = document.getElementById('visitCounter');
-    if (!el || !ANALYTICS.goatcounter || isLocal) return;
+    log('config', { ...ANALYTICS, isLocal, protocol: location.protocol, host: location.hostname });
+
+    if (!el) return log('✗ אין אלמנט #visitCounter בעמוד הזה');
+    if (!ANALYTICS.goatcounter) return log('✗ ANALYTICS.goatcounter ריק — כנראה מוגש קובץ site.js ישן');
+    if (isLocal) return log('✗ ריצה מקומית (file:// או localhost) — המונה מושבת בכוונה');
+
+    const url = `https://${ANALYTICS.goatcounter}.goatcounter.com/counter/${ANALYTICS.counterPath}.json`;
+    log('פונה אל', url);
 
     try {
-      const url = `https://${ANALYTICS.goatcounter}.goatcounter.com/counter/${ANALYTICS.counterPath}.json`;
       const res = await fetch(url, { mode: 'cors' });
-      if (!res.ok) return;
+      log('סטטוס HTTP', res.status);
+      if (!res.ok) return log('✗ השרת החזיר שגיאה. 404 = נתיב לא נכון, 403 = הסטטיסטיקות אינן ציבוריות');
 
       const data = await res.json();
+      log('תשובה', data);
+
       const n = parseInt(String(data.count).replace(/[^\d]/g, ''), 10);
-      if (!Number.isFinite(n) || n < ANALYTICS.counterMin) return;
+      if (!Number.isFinite(n)) return log('✗ לא הצלחתי לקרוא מספר מהתשובה');
+      if (n < ANALYTICS.counterMin) return log(`✗ ${n} קטן מ-counterMin (${ANALYTICS.counterMin})`);
 
       el.querySelector('[data-count]').textContent = n.toLocaleString('he-IL');
       el.hidden = false;
-    } catch (e) { /* המונה נשאר מוסתר */ }
+      log('✓ המונה מוצג:', n);
+    } catch (e) {
+      log('✗ הבקשה נכשלה:', e.name, e.message);
+      log('  TypeError/Failed to fetch = חסימת CORS או חוסם פרסומות שחוסם את goatcounter');
+    }
   }
 
   track();
