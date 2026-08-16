@@ -179,7 +179,8 @@ const FEEDBACK = {
 
     for (const r of FEEDBACK.reactions) {
       try {
-        const res = await fetch(`https://${code}.goatcounter.com/counter/reaction-${r.id}.json`, { mode: 'cors' });
+        const res = await fetch(`https://${code}.goatcounter.com/counter/reaction-${r.id}.json`,
+                                { mode: 'cors', cache: 'no-store' });
         if (!res.ok) { log('אין מספר עבור', r.id, res.status); continue; }
         const n = parseInt(String((await res.json()).count).replace(/[^\d]/g, ''), 10);
         if (Number.isFinite(n) && n > 0) {

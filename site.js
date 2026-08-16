@@ -72,7 +72,8 @@ const ANALYTICS = {
     log('פונה אל', url);
 
     try {
-      const res = await fetch(url, { mode: 'cors' });
+      // no-store: בלי זה הדפדפן עלול להגיש את המספר הישן מהמטמון
+      const res = await fetch(url, { mode: 'cors', cache: 'no-store' });
       log('סטטוס HTTP', res.status);
       if (!res.ok) return log('✗ השרת החזיר שגיאה. 404 = נתיב לא נכון, 403 = הסטטיסטיקות אינן ציבוריות');
 
