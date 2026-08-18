@@ -231,11 +231,24 @@
   }
   .more a:hover{border-color:var(--brand)}
   .more a small{display:block;font-weight:400;font-size:12.5px;color:var(--ink-faint);margin-top:2px}
-  #visitCounter{margin-top:6px}
-  #visitCounter b{color:var(--ink-soft)}
 
   .disabled-block{opacity:.4;pointer-events:none;filter:grayscale(.5)}
   @media (max-width:380px){ .chips{grid-template-columns:repeat(2,1fr)} }
+
+/* ── לייקים, צפיות ותגובות ──
+   הרכיבים מגיעים עם העיצוב שלהם וקוראים את המשתנים האלה, אז מיפוי אחד
+   מספיק כדי שיירשו את הצבעים של האתר — כולל המצב הכהה. */
+.engage{margin:18px 0}
+.engage-bar{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-bottom:14px}
+[data-tells]{
+  --tlx-fg:var(--ink);
+  --tlx-muted:var(--ink-faint);
+  --tlx-card:var(--card);
+  --tlx-border:var(--line);
+  --tlx-accent:var(--brand);
+  --tlx-accent-fg:var(--card);
+  --tlx-radius:18px;
+}
 </style>
 </head>
 <body>
@@ -319,13 +332,18 @@
     </div>
   </section>
 
-  <div id="feedback"></div>
+  <section class="engage" aria-label="לייקים ותגובות">
+    <div class="engage-bar">
+      <div data-tells="likes"></div>
+      <div data-tells="views"></div>
+    </div>
+    <div data-tells="comments"></div>
+  </section>
 
   <p class="note">
     המספרים הם המלצה בלבד, מבוססת על נורמות מקובלות בישראל ועל הערכת עלות מנה.
     בסוף — תנו מה שנעים ומתאים לכם. 💜
   </p>
-  <p class="note" id="visitCounter" hidden>👀 <b data-count>0</b> בדיקות באתר עד כה</p>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -708,6 +726,6 @@ $('#shareBtn').addEventListener('click', doShare);
 $('#resetBtn').addEventListener('click', reset);
 </script>
 <script src="site.js?v=2"></script>
-<script src="feedback.js?v=2"></script>
+<script src="https://web-feeds.shayh22.workers.dev/embed.js" data-site="st_AZZqe57hSzXi" defer></script>
 </body>
 </html>
